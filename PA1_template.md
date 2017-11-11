@@ -76,11 +76,11 @@ output:
 ![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
 ```r
-  plot1mean   <- as.numeric(mean(TotalNumStepsPerDay$x))
-  plot1median <- as.numeric(median(TotalNumStepsPerDay$x))
+  plot1mean   <- as.integer(mean(TotalNumStepsPerDay$x))
+  plot1median <- as.integer(median(TotalNumStepsPerDay$x))
 ```
-* Mean of total number of steps per day:   1.0766189\times 10^{4}
-* Median of total number of steps per day: 1.0765\times 10^{4}
+* Mean of total number of steps per day:   10766
+* Median of total number of steps per day: 10765
 
 
 ## What is the average daily activity pattern?
@@ -123,7 +123,7 @@ output:
 #### 3. Now, select only interval, steps and date to a new data set to eliminate NA observations.
 #### 4. Combine Non NA data set created during first step and this new data set to produce new data set containing mean of 5 min interval in place of NA values for the number of steps.
 #### 5. Make a histogram using ggplot2 system with x-axis = each day and y-axis as number of steps per day.
-#### 3. Calculate mean and median of no of steps for the whole duration spanning across 2 months - Oct-2012 and Nov-2012 on this new data set.
+#### 6. Calculate mean and median of no of steps for the whole duration spanning across 2 months - Oct-2012 and Nov-2012 on this new data set.
 
 ```r
   StepsCountNA <- StepsCountDS[!complete.cases(StepsCountDS), ]
@@ -149,12 +149,12 @@ output:
 
 ```r
   plot3sumofNA <- sum(is.na(StepsCountDS))
-  plot3mean    <- as.numeric(mean(WholeNumStepsPerDay$x))
-  plot3median  <- as.numeric(median(WholeNumStepsPerDay$x))
+  plot3mean    <- as.integer(mean(WholeNumStepsPerDay$x))
+  plot3median  <- as.integer(median(WholeNumStepsPerDay$x))
 ```
 * Number of observations containing NA: 2304
-* Mean of number of steps per day:      1.0765639\times 10^{4}
-* Median of number of steps per day:    1.0762\times 10^{4}
+* Mean of number of steps per day:      10765
+* Median of number of steps per day:    10762
   
 ## Are there differences in activity patterns between weekdays and weekends?
 ### Steps:-
