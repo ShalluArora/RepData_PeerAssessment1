@@ -13,7 +13,8 @@ output:
 #### 3. Check if unzipped activity.csv already exists in working directory.
 #### 4. If it doesn't, unzip the file and then read it using read.csv
 #### 5. Remove NA rows using complete.cases as index to original dataset.
-```{r results = 'hide', message = FALSE, warning = FALSE}
+
+```r
   if (!require("scales")){
     install.packages("scales")
   }
@@ -42,13 +43,13 @@ output:
   }
 ```
 
-```{r}  
+
+```r
   StepsCountDS <- read.csv(file)
   
   ## Remove non NA rows from StepsCountDS Dataset
   
   StepsCountNonNA <- StepsCountDS[complete.cases(StepsCountDS), ]
-
 ```
 
 ## What is mean total number of steps taken per day?
@@ -57,7 +58,8 @@ output:
 #### 1. Calculate sum of steps taken per day using aggregate function and create a new data frame
 #### 2. Make a histogram using ggplot2 system with x-axis = each day and y-axis as number of steps per day.
 #### 3. Calculate mean and median of no of steps for the whole duration spanning across 2 months - Oct-2012 and Nov-2012.
-```{r}
+
+```r
  ## 1st plot
   
   ## calculate total number of steps taken per day
@@ -69,12 +71,16 @@ output:
               theme_bw() + theme(axis.text.x = element_text(angle=90)) + ggtitle("Steps per day")
   
   print(plot1)
-  
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+
+```r
   plot1mean   <- as.numeric(mean(TotalNumStepsPerDay$x))
   plot1median <- as.numeric(median(TotalNumStepsPerDay$x))
 ```
-* Mean of total number of steps per day:   `r plot1mean`
-* Median of total number of steps per day: `r plot1median`
+* Mean of total number of steps per day:   1.0766189\times 10^{4}
+* Median of total number of steps per day: 1.0765\times 10^{4}
 
 
 ## What is the average daily activity pattern?
@@ -82,7 +88,8 @@ output:
 #### 1. Calculate sum of steps taken per interval using aggregate function and create a new data frame
 #### 2. Make a line plot using ggplot2 system with x-axis = 5 min intervals and y-axis as number of steps per day.
 #### 3. calculate interval having maxium steps during the whole of duration from 1-Oct-2012 to 30-Nov-2012.
-```{r}
+
+```r
 ## 2nd plot
   
   ## Total number of steps in each 5 min interval
@@ -100,10 +107,14 @@ output:
               theme_bw() + theme(axis.text.x = element_text(angle=90)) + ggtitle("Steps per interval")
   
   print(plot2)
-  
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+
+```r
   plot2MaxStepsInt <- TotalNumStepsPerInt[which.max(TotalNumStepsPerInt$steps), 1]
 ```
-* Which interval contains max number of Steps: `r plot2MaxStepsInt`
+* Which interval contains max number of Steps: 835
 
 ## Imputing missing values
 ### Steps:-
@@ -113,7 +124,8 @@ output:
 #### 4. Combine Non NA data set created during first step and this new data set to produce new data set containing mean of 5 min interval in place of NA values for the number of steps.
 #### 5. Make a histogram using ggplot2 system with x-axis = each day and y-axis as number of steps per day.
 #### 3. Calculate mean and median of no of steps for the whole duration spanning across 2 months - Oct-2012 and Nov-2012 on this new data set.
-```{r}
+
+```r
   StepsCountNA <- StepsCountDS[!complete.cases(StepsCountDS), ]
   
   replaceCountNA <- merge(x=StepsCountNA, y = TotalNumStepsPerInt, by = c("interval"), all.x = TRUE)
@@ -131,13 +143,18 @@ output:
               theme_bw() + theme(axis.text.x = element_text(angle=90)) + ggtitle("Steps per day")
   
   print(plot3)
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+
+```r
   plot3sumofNA <- sum(is.na(StepsCountDS))
   plot3mean    <- as.numeric(mean(WholeNumStepsPerDay$x))
   plot3median  <- as.numeric(median(WholeNumStepsPerDay$x))
 ```
-* Number of observations containing NA: `r plot3sumofNA`
-* Mean of number of steps per day:      `r plot3mean`
-* Median of number of steps per day:    `r plot3median`
+* Number of observations containing NA: 2304
+* Mean of number of steps per day:      1.0765639\times 10^{4}
+* Median of number of steps per day:    1.0762\times 10^{4}
   
 ## Are there differences in activity patterns between weekdays and weekends?
 ### Steps:-
@@ -145,7 +162,8 @@ output:
 #### 2. Convert this variable into factor variable
 #### 3. Create a line plot using this factor variable as a grouping criteria to create 2 graphs one for weekday and one for weekend containing x-axis = 5 min intervals and y-axis as number of steps.
 
-```{r}
+
+```r
   StepsCount$day <- ifelse(weekdays(as.Date(StepsCount$date)) %in% c("Saturday",   
                                                                     "Sunday"),"weekend", "weekday")
   
@@ -165,5 +183,6 @@ output:
  
   
   print(plot4)
-  
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
